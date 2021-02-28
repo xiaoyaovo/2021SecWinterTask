@@ -1,0 +1,16 @@
+import sys
+import requests
+from fake_useragent import UserAgent
+
+def judge(url,port):
+    ua = UserAgent()
+    headers = {"user-agent": UserAgent().random}
+    url_1 = 'http://'+str(url)+':'+str(port)+'/ws_utc/begin.do'
+    url_2 = 'http://'+str(url)+':'+str(port)+'/ws_utc/config.do'
+    r1 = requests.get(url_1, headers)
+    r2 = requests.get(url_2, headers)
+    if r1.status_code == 200 or r2.status_code == 200:
+        print('Scanner detected:'+str(url)+str(port)+'has CVE-2018-2894')
+if __name__ == "__main__":
+    
+    judge(sys.argv[1] ,int(sys.argv[2]) )
